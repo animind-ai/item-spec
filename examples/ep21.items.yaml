@@ -1,0 +1,289 @@
+# 洞察系列 #21 勾股定理：配套练习包。
+# 对应 scene-spec/examples/ep21.scene.yaml：钩子驳斥 a+b=c，中段预测"空白会变成什么"，钝角非例，最后图里的每一块落到公式。
+# 题目按推送时机排列：看片前探索 → 视频中预测 → 看片后概念题与程序题（样例 → 半样例 → 独立）→ 方法比较 → 回测变式 → 单元末交错。
+# 回测变式都挂在锚题 ep21-proc-1 上，按 变条件 → 变结论 → 逆向 逐级上升；画面和数字都不和视频重复。
+spec: "0.1"
+
+pack:
+  id: ep21
+  title: 勾股定理：拼一拼就看见
+  line: insight
+  units: [J11]
+  episode: 21
+  scene: ep21
+  misconceptions:
+    - a+b=c
+    - 任何三角形都有 a²+b²=c²
+    - 长度能直接相加，平方也能直接相加
+  author: Boxi Yu
+  license: CC-BY-4.0
+
+items:
+  # ---------- 看片前：用旧办法会做错的一题，只记录、不判对错 ----------
+  - id: ep21-explore-1
+    type: explore
+    skill: pythagoras-hypotenuse
+    stem: 一个直角三角形，两条直角边分别是 3 厘米和 4 厘米。不用尺子量，你觉得斜边大约多长？写出你的猜测和理由。
+    answer:
+      kind: number
+      value: 5
+      unit: 厘米
+      explain: 看完视频再回来看：斜边是 5 厘米，不是 3+4=7 厘米。
+    misconception: a+b=c
+    feedback: false
+    confidence: true
+    source: original
+
+  # ---------- 视频中：Predict 暂停 ----------
+  - id: ep21-predict-1
+    type: predict
+    beat: Predict
+    stem: 大正方形不动，四个三角形两两拼成长方形。空白处会变成什么？面积变了吗？
+    answer:
+      kind: choice
+      options:
+        - text: 变成两个小正方形，边长分别是 a 和 b，空白的总面积不变
+          correct: true
+        - text: 还是一个正方形，但边长变成 a+b
+          misconception: a+b=c
+        - text: 变成两个小正方形，空白的总面积变小了
+        - text: 空白消失了
+    confidence: true
+    source: original
+
+  # ---------- 看片后：概念题（为什么 / 表征判断），含自我解释和非例 ----------
+  - id: ep21-why-1
+    type: why
+    skill: pythagoras-why
+    stem: 为什么直角三角形的斜边不是 $a+b$？用一句话说明。
+    answer:
+      kind: open
+      rubric:
+        - 提到两边之和大于第三边（直路比绕远路短），或提到用面积拼图得到 $c^2=a^2+b^2$
+        - 不能只写"因为公式是 a²+b²=c²"而不说理由
+      sample: 走斜边是直路，走两条直角边是绕远路，直路更短，所以 c 比 a+b 小。
+    misconception: a+b=c
+    confidence: true
+    source: original
+
+  - id: ep21-why-2
+    type: why
+    skill: pythagoras-why
+    self_explain: true
+    stem: 回想视频里的两种摆法。图里哪一块对应公式里的 $c^2$？哪两块对应 $a^2+b^2$？为什么这两部分面积一定相等？
+    answer:
+      kind: open
+      rubric:
+        - 说出第一种摆法中间的斜边正方形是 $c^2$
+        - 说出第二种摆法空出的两个小正方形是 $a^2$ 和 $b^2$
+        - 说明理由：大正方形和四个三角形都没变，所以两次剩下的空白面积相等
+    confidence: true
+    source: original
+
+  - id: ep21-rep-1
+    type: representation
+    skill: pythagoras-why
+    stem: 下面哪一句话，最能说明视频里的拼图证明了 $a^2+b^2=c^2$？
+    answer:
+      kind: choice
+      options:
+        - text: 两种摆法里，大正方形一样大，四个三角形也一样，所以两次剩下的空白面积相等
+          correct: true
+        - text: 第二种摆法里两个小正方形加起来看上去和中间的正方形差不多大
+        - text: 中间正方形的边长是 a+b，所以面积是 (a+b)²
+          misconception: a+b=c
+        - text: 量一量就知道 3²+4²=5²，所以对所有直角三角形都成立
+    confidence: true
+    source: original
+
+  - id: ep21-nonex-1
+    type: representation
+    skill: pythagoras-converse
+    non_example: true
+    stem: 把直角三角形的直角撑开成 110°，两条夹边 a、b 的长度不变。这时第三边 c 的平方和 $a^2+b^2$ 比，结果是？
+    answer:
+      kind: choice
+      options:
+        - text: $c^2$ 比 $a^2+b^2$ 大
+          correct: true
+        - text: 两者相等，勾股定理对所有三角形都成立
+          misconception: 任何三角形都有 a²+b²=c²
+        - text: $c^2$ 比 $a^2+b^2$ 小
+      explain: 角撑开，对边变长；四个三角形拼不回大正方形，只有直角才严丝合缝。
+    confidence: true
+    source: original
+
+  # ---------- 看片后：程序题，从完整样例到独立解题 ----------
+  - id: ep21-proc-1
+    type: procedure
+    skill: pythagoras-hypotenuse
+    scaffold: {level: worked}
+    stem: 直角三角形两条直角边是 6 和 8，求斜边。
+    steps:
+      - {label: 写出关系, work: '直角三角形里 $c^2=a^2+b^2$'}
+      - {label: 代入算平方和, work: '$c^2=6^2+8^2=36+64=100$'}
+      - {label: 开方取正值, work: '$c=\sqrt{100}=10$（边长取正）'}
+    answer:
+      kind: number
+      value: 10
+    source: original
+
+  - id: ep21-proc-2
+    type: procedure
+    skill: pythagoras-hypotenuse
+    scaffold: {level: faded, from: ep21-proc-1}
+    variation: {anchor: ep21-proc-1, changes: [condition]}
+    stem: 直角三角形两条直角边是 5 和 12，求斜边。第一步已经写好，接着做完。
+    steps:
+      - {label: 写出关系, work: '$c^2=a^2+b^2$'}
+      - {label: 代入算平方和, work: '$c^2=5^2+12^2=25+144=169$', shown: false}
+      - {label: 开方取正值, work: '$c=13$', shown: false}
+    answer:
+      kind: number
+      value: 13
+    source: original
+
+  - id: ep21-proc-3
+    type: procedure
+    skill: pythagoras-hypotenuse
+    scaffold: {level: independent, from: ep21-proc-2}
+    variation: {anchor: ep21-proc-1, changes: [condition]}
+    stem: 直角三角形两条直角边是 9 和 12，求斜边。
+    answer:
+      kind: number
+      value: 15
+    confidence: true
+    source: original
+
+  - id: ep21-cmp-1
+    type: compare
+    skill: pythagoras-why
+    variation: {anchor: ep21-proc-1, changes: [method]}
+    stem: >-
+      同一个边长 $a+b$ 的大正方形，小明不挪三角形，直接列式：大正方形面积 = 中间正方形 + 四个三角形，
+      即 $(a+b)^2=c^2+4\cdot\frac{1}{2}ab$。把它展开化简，看能不能也得到勾股定理。
+      和视频里"挪一挪"的方法比，各有什么好处？
+    answer:
+      kind: open
+      rubric:
+        - 正确化简：$a^2+2ab+b^2=c^2+2ab$，所以 $a^2+b^2=c^2$
+        - 说出列式法不用挪图、写起来短；挪图法一眼看出"空白面积不变"，更容易想到
+    confidence: true
+    source: original
+
+  # ---------- 间隔回测：2–3 天后、1–2 周后各推 1–2 道，变式逐级上升 ----------
+  - id: ep21-var-1
+    type: procedure
+    slot: retest
+    skill: pythagoras-hypotenuse
+    variation: {anchor: ep21-proc-1, changes: [condition]}
+    stem: 直角三角形两条直角边是 1 和 2，求斜边。
+    answer:
+      kind: expression
+      value: sqrt(5)
+      equivalent: ['5^(1/2)']
+      explain: '$c^2=1+4=5$，斜边不是整数也没关系，$c=\sqrt5$。'
+    misconception: a+b=c
+    confidence: true
+    source: original
+
+  - id: ep21-var-2
+    type: procedure
+    slot: retest
+    skill: pythagoras-hypotenuse
+    variation: {anchor: ep21-proc-1, changes: [condition]}
+    stem: 一个长方形屏幕长 16 厘米、宽 12 厘米，对角线多长？
+    answer:
+      kind: number
+      value: 20
+      unit: 厘米
+    confidence: true
+    source: original
+
+  - id: ep21-var-3
+    type: procedure
+    slot: retest
+    skill: hypotenuse-altitude
+    variation: {anchor: ep21-proc-1, changes: [conclusion]}
+    stem: 直角三角形两条直角边是 6 和 8。这回不求斜边，求斜边上的高。
+    answer:
+      kind: number
+      value: 4.8
+      explain: 斜边是 10；面积两种算法相等：$\frac12\cdot6\cdot8=\frac12\cdot10\cdot h$，所以 $h=4.8$。
+    confidence: true
+    source: original
+
+  - id: ep21-var-4
+    type: procedure
+    slot: retest
+    skill: pythagoras-leg
+    variation: {anchor: ep21-proc-1, changes: [reverse]}
+    stem: 直角三角形的斜边是 13，一条直角边是 5，求另一条直角边。
+    answer:
+      kind: number
+      value: 12
+    misconception: 长度能直接相加，平方也能直接相加
+    confidence: true
+    source: original
+
+  - id: ep21-transfer-1
+    type: transfer
+    slot: retest
+    skill: pythagoras-leg
+    variation: {anchor: ep21-proc-1, changes: [reverse]}
+    stem: 一架 5 米长的梯子斜靠在竖直的墙上，梯子底端离墙 3 米。梯子顶端离地面多高？
+    answer:
+      kind: number
+      value: 4
+      unit: 米
+    confidence: true
+    source: original
+
+  # ---------- 单元末交错：和易混题型混排 ----------
+  - id: ep21-mix-1
+    type: representation
+    slot: interleave
+    skill: pythagoras-converse
+    confusable_with: [pythagoras-hypotenuse]
+    stem: 三角形三边是 5、6、8。它是锐角、直角还是钝角三角形？
+    answer:
+      kind: choice
+      options:
+        - text: 锐角三角形
+        - text: 直角三角形
+          misconception: 任何三角形都有 a²+b²=c²
+        - text: 钝角三角形
+          correct: true
+      explain: $5^2+6^2=61<64=8^2$，最长边的平方更大，最长边对的角是钝角。
+    confidence: true
+    source: original
+
+  - id: ep21-mix-2
+    type: procedure
+    slot: interleave
+    units: [H6]
+    skill: right-triangle-area
+    confusable_with: [pythagoras-hypotenuse]
+    stem: 直角三角形两条直角边是 6 和 8，它的面积是多少？
+    answer:
+      kind: number
+      value: 24
+      explain: 面积是 $\frac12\cdot6\cdot8=24$；和"求斜边"别混：求斜边要先平方再相加。
+    source: original
+
+  - id: ep21-mix-3
+    type: representation
+    slot: interleave
+    skill: pythagoras-converse
+    confusable_with: [pythagoras-leg]
+    stem: 三边是 7、24、25 的三角形是直角三角形吗？
+    answer:
+      kind: choice
+      options:
+        - text: 是
+          correct: true
+        - text: 不是
+        - text: 不知道角度就判断不了
+      explain: $7^2+24^2=49+576=625=25^2$。
+    confidence: true
+    source: original

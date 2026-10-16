@@ -1,0 +1,244 @@
+# §6.7 例1(1) 高阶等差数列：例题讲解线的配套练习包。
+# 对应 scene-spec/examples/s67-p01.scene.yaml。讲题视频本质是样例学习，所以程序题是一条渐隐链：
+#   完整样例 → 半样例（隐去后两步）→ 半样例（只给子目标标签）→ 独立解题，
+# 每一步都带同一组子目标标签：往下做差 / 在等差那层补全 / 逐层加回。
+# 题目数字都是新编的，不和视频里的 2, 5, 11, 21, 36 重复。
+spec: "0.1"
+
+pack:
+  id: s67-p01
+  title: 高阶等差数列
+  line: worked
+  units: [S6]
+  scene: s67-p01
+  misconceptions:
+    - 只给了五项，求不出第八项
+    - 做差要用前一项减后一项
+    - 做一次差就一定是等差
+  author: Boxi Yu
+  license: CC-BY-4.0
+
+items:
+  # ---------- 看片前 ----------
+  - id: s67-p01-explore-1
+    type: explore
+    skill: diff-table
+    stem: 数列 1, 2, 5, 11, 21, … 既不是等差数列，也不是等比数列。你能写出下一项吗？写出你是怎么想的。
+    answer:
+      kind: number
+      value: 36
+      explain: 后一项减前一项得 1, 3, 6, 10；再减一次得 2, 3, 4，是等差的。补出 5，再往上加回：10+5=15，21+15=36。
+    misconception: 只给了五项，求不出第八项
+    feedback: false
+    confidence: true
+    source: original
+
+  # ---------- 视频中：Think 暂停 ----------
+  - id: s67-p01-predict-1
+    type: predict
+    beat: Think
+    stem: 本题再往下做一次差，第三层全是 1，是常数；而 $A_n$ 恰好是 $n$ 的三次式。这是巧合吗？
+    answer:
+      kind: choice
+      options:
+        - text: 不是巧合：三次式做三次差一定得到常数
+          correct: true
+        - text: 是巧合，换一个数列就不成立了
+        - text: 说明不了什么，任何数列做三次差都是常数
+          misconception: 做一次差就一定是等差
+    confidence: true
+    source: original
+
+  # ---------- 看片后：概念题 ----------
+  - id: s67-p01-why-1
+    type: why
+    skill: diff-table
+    stem: 题目只给了五项，为什么加上"二阶差数列是等差数列"这一句，就能求出第八项？
+    answer:
+      kind: open
+      rubric:
+        - 说出二阶差那一层是等差数列，知道公差就能一直往后写
+        - 说出补出来的二阶差可以逐层加回一阶差和原数列
+    misconception: 只给了五项，求不出第八项
+    confidence: true
+    source: original
+
+  - id: s67-p01-why-2
+    type: why
+    skill: diff-table
+    self_explain: true
+    stem: 差分表里"左边加下边等于右边"的小三角形，写成式子是什么？为什么往上加回时可以一直用它？
+    answer:
+      kind: open
+      rubric:
+        - '写出 $a_{n+1}=a_n+b_n$（或 $b_{n+1}=b_n+c_n$）'
+        - 说明这就是差数列的定义 $b_n=a_{n+1}-a_n$ 移项得到的
+    confidence: true
+    source: original
+
+  - id: s67-p01-rep-1
+    type: representation
+    skill: diff-table
+    stem: 数列 1, 4, 10, 20, 35 的差分表，哪一个是对的？
+    answer:
+      kind: choice
+      options:
+        - text: 一阶差 3, 6, 10, 15；二阶差 3, 4, 5
+          correct: true
+        - text: 一阶差 -3, -6, -10, -15；二阶差 -3, -4, -5
+          misconception: 做差要用前一项减后一项
+        - text: 一阶差 3, 6, 10, 15；二阶差 3, 3, 3
+          misconception: 做一次差就一定是等差
+    confidence: true
+    source: original
+
+  # ---------- 看片后：样例 → 半样例 → 独立 ----------
+  - id: s67-p01-proc-1
+    type: procedure
+    skill: diff-table
+    scaffold: {level: worked}
+    stem: 数列 2, 3, 6, 12, 22, … 的二阶差数列是等差数列，求第 7 项。
+    steps:
+      - {label: 往下做差, work: '一阶差 1, 3, 6, 10；二阶差 2, 3, 4，公差为 1'}
+      - {label: 在等差那层补全, work: '二阶差往后补 5, 6'}
+      - {label: 逐层加回, work: '一阶差 10+5=15，15+6=21；原数列 22+15=37，37+21=58'}
+    answer:
+      kind: number
+      value: 58
+    source: original
+
+  - id: s67-p01-proc-2
+    type: procedure
+    skill: diff-table
+    scaffold: {level: faded, from: s67-p01-proc-1}
+    variation: {anchor: s67-p01-proc-1, changes: [condition]}
+    stem: 数列 1, 4, 10, 20, 35, … 的二阶差数列是等差数列，求第 7 项。第一步已经做好，接着做完。
+    steps:
+      - {label: 往下做差, work: '一阶差 3, 6, 10, 15；二阶差 3, 4, 5，公差为 1'}
+      - {label: 在等差那层补全, work: '二阶差往后补 6, 7', shown: false}
+      - {label: 逐层加回, work: '一阶差 21, 28；原数列 56, 84', shown: false}
+    answer:
+      kind: number
+      value: 84
+    source: original
+
+  - id: s67-p01-proc-3
+    type: procedure
+    skill: diff-table
+    scaffold: {level: faded, from: s67-p01-proc-2}
+    variation: {anchor: s67-p01-proc-1, changes: [condition]}
+    stem: 数列 1, 5, 14, 30, 55, … 的二阶差数列是等差数列，求第 7 项。按"往下做差 → 在等差那层补全 → 逐层加回"三步自己做。
+    steps:
+      - {label: 往下做差, work: '一阶差 4, 9, 16, 25；二阶差 5, 7, 9，公差为 2', shown: false}
+      - {label: 在等差那层补全, work: '二阶差往后补 11, 13', shown: false}
+      - {label: 逐层加回, work: '一阶差 36, 49；原数列 91, 140', shown: false}
+    answer:
+      kind: number
+      value: 140
+    source: original
+
+  - id: s67-p01-proc-4
+    type: procedure
+    skill: diff-table
+    scaffold: {level: independent, from: s67-p01-proc-3}
+    variation: {anchor: s67-p01-proc-1, changes: [condition]}
+    stem: 数列 0, 1, 4, 10, 20, … 的二阶差数列是等差数列，求第 8 项。
+    answer:
+      kind: number
+      value: 84
+    confidence: true
+    source: original
+
+  - id: s67-p01-cmp-1
+    type: compare
+    skill: diff-table
+    variation: {anchor: s67-p01-proc-1, changes: [method]}
+    stem: >-
+      视频最后提到另一种解法：直接设 $A_n=pn^3+qn^2+rn+s$，用前四项列方程求 $p,q,r,s$。
+      和差分表"往下做差、补全、加回"比，两种方法各适合什么时候用？
+    answer:
+      kind: open
+      rubric:
+        - 说出差分表适合只求某一项、计算量小
+        - 说出设三次式适合要通项，但要先知道是几次式、要解四元方程组
+    confidence: true
+    source: original
+
+  # ---------- 间隔回测 ----------
+  - id: s67-p01-var-1
+    type: procedure
+    slot: retest
+    skill: diff-table
+    variation: {anchor: s67-p01-proc-1, changes: [condition]}
+    stem: 数列 1, 3, 7, 13, 21, … 的一阶差数列是等差数列，求第 8 项。
+    answer:
+      kind: number
+      value: 57
+    confidence: true
+    source: original
+
+  - id: s67-p01-var-2
+    type: procedure
+    slot: retest
+    skill: accumulate
+    variation: {anchor: s67-p01-proc-1, changes: [conclusion]}
+    stem: 数列 2, 3, 6, 12, 22, … 的二阶差数列是等差数列。这回不求某一项，用累加法求通项 $a_n$。
+    answer:
+      kind: expression
+      value: 2 + (n-1)*n*(n+1)/6
+      equivalent: ['(n^3 - n + 12)/6']
+      vars: [n]
+      explain: '一阶差 $b_k=\frac{k(k+1)}{2}$，$a_n=a_1+\sum_{k=1}^{n-1}b_k=2+\frac{(n-1)n(n+1)}{6}$。'
+    confidence: true
+    source: original
+
+  - id: s67-p01-var-3
+    type: procedure
+    slot: retest
+    skill: diff-table
+    variation: {anchor: s67-p01-proc-1, changes: [reverse]}
+    stem: 一个数列的二阶差全是 2，已知 $a_3=7$，$a_4=13$，$a_5=21$。求 $a_1$。
+    answer:
+      kind: number
+      value: 1
+      explain: 一阶差 $a_4-a_3=6$，$a_5-a_4=8$；往前推一阶差是 4、2，所以 $a_2=3$，$a_1=1$。
+    misconception: 只给了五项，求不出第八项
+    confidence: true
+    source: original
+
+  # ---------- 单元末交错 ----------
+  - id: s67-p01-mix-1
+    type: procedure
+    slot: interleave
+    skill: geometric-ratio
+    confusable_with: [diff-table]
+    stem: 数列 2, 6, 18, 54, … 的下一项是多少？
+    answer:
+      kind: number
+      value: 162
+      explain: 做差得 4, 12, 36，越做越大；换个思路，相邻两项的比都是 3，是等比数列。
+    source: original
+
+  - id: s67-p01-mix-2
+    type: procedure
+    slot: interleave
+    skill: arithmetic-term
+    confusable_with: [diff-table]
+    stem: 等差数列 3, 7, 11, … 的第 20 项是多少？
+    answer:
+      kind: number
+      value: 79
+      explain: 一阶差已经是常数 4，不用再往下做差：$a_{20}=3+19\times4=79$。
+    source: original
+
+  # ---------- 题库引用：只存 id 和标注 ----------
+  - id: s67-p01-bank-1
+    type: transfer
+    slot: interleave
+    skill: accumulate
+    confusable_with: [diff-table]
+    difficulty: 1
+    tags: [递推数列, 累加法, 裂项]
+    answer: {kind: choice}
+    confidence: true
+    source: bank:0a886c4c08669104-Q005

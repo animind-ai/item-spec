@@ -1,0 +1,264 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/animind-ai/item-spec/schema/item-spec-0.1.schema.json",
+  "title": "item-spec 0.1",
+  "description": "一集视频配套的练习包：每道题一份结构化描述，说明题型、答案、变式关系和教学标注。",
+  "type": "object",
+  "required": ["spec", "pack", "items"],
+  "additionalProperties": false,
+  "properties": {
+    "spec": { "const": "0.1" },
+    "pack": { "$ref": "#/$defs/pack" },
+    "items": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/item" }
+    }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "unit": {
+      "description": "规划 §1.2 的单元编号，如 P3b、M5、H6、J11、S6、X1",
+      "type": "string",
+      "pattern": "^[PMHJSX][0-9]+b?$"
+    },
+    "units": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/unit" }
+    },
+    "license": { "enum": ["CC-BY-4.0", "CC-BY-SA-4.0"] },
+    "text": { "type": "string", "minLength": 1 },
+    "pack": {
+      "type": "object",
+      "required": ["id", "title", "line", "units", "author", "license"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "$ref": "#/$defs/text" },
+        "line": {
+          "description": "产品线：insight 洞察 | worked 例题讲解 | contest 竞赛",
+          "enum": ["insight", "worked", "contest"]
+        },
+        "units": { "$ref": "#/$defs/units" },
+        "episode": { "type": "integer", "minimum": 1 },
+        "scene": {
+          "description": "配套视频的 scene-spec meta.id",
+          "$ref": "#/$defs/id"
+        },
+        "misconceptions": {
+          "description": "本包检测的迷思（学生错误说法原文）。写了这一项，题目里的 misconception 必须取自这里",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/text" }
+        },
+        "author": { "$ref": "#/$defs/text" },
+        "license": { "$ref": "#/$defs/license" }
+      }
+    },
+    "item": {
+      "type": "object",
+      "required": ["id", "type", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "type": {
+          "description": "explore 探索 | predict 预测 | why 为什么 | representation 表征判断 | procedure 程序 | transfer 迁移 | compare 方法比较",
+          "enum": ["explore", "predict", "why", "representation", "procedure", "transfer", "compare"]
+        },
+        "slot": {
+          "description": "推送时机：pre 看片前 | video 视频中 | post 看片后立即 | retest 间隔回测 | interleave 单元末交错。不写时由题型推出",
+          "enum": ["pre", "video", "post", "retest", "interleave"]
+        },
+        "units": { "$ref": "#/$defs/units" },
+        "episode": { "type": "integer", "minimum": 1 },
+        "skill": {
+          "description": "题型标签，交错练习按它混排",
+          "$ref": "#/$defs/id"
+        },
+        "confusable_with": {
+          "description": "容易和本题混淆的题型标签",
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/id" }
+        },
+        "stem": { "$ref": "#/$defs/text" },
+        "answer": { "$ref": "#/$defs/answer" },
+        "steps": {
+          "description": "样例的步骤：label 是子目标标签，work 是这一步的做法，shown 表示这一步的做法是否直接给出",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/step" }
+        },
+        "scaffold": {
+          "type": "object",
+          "required": ["level"],
+          "additionalProperties": false,
+          "properties": {
+            "level": {
+              "description": "worked 完整样例 | faded 半样例 | independent 独立解题",
+              "enum": ["worked", "faded", "independent"]
+            },
+            "from": {
+              "description": "上一级样例的题号，用来检查渐隐是否单调",
+              "$ref": "#/$defs/id"
+            }
+          }
+        },
+        "variation": {
+          "type": "object",
+          "required": ["anchor", "changes"],
+          "additionalProperties": false,
+          "properties": {
+            "anchor": { "$ref": "#/$defs/id" },
+            "changes": {
+              "description": "condition 变条件 | conclusion 变结论 | reverse 逆向 | method 方法比较",
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": { "enum": ["condition", "conclusion", "reverse", "method"] }
+            }
+          }
+        },
+        "misconception": { "$ref": "#/$defs/text" },
+        "confidence": {
+          "description": "作答后加一项自信度评分（1–5）",
+          "type": "boolean"
+        },
+        "self_explain": {
+          "description": "自我解释提示题",
+          "type": "boolean"
+        },
+        "non_example": {
+          "description": "非例题：展示规律在什么情况下失效",
+          "type": "boolean"
+        },
+        "feedback": {
+          "description": "是否当场判对错。探索题应为 false：只记录答案",
+          "type": "boolean"
+        },
+        "beat": {
+          "description": "预测题对应的 scene-spec beat id",
+          "type": "string",
+          "pattern": "^[A-Za-z][A-Za-z0-9_]*$"
+        },
+        "difficulty": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "tags": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/text" }
+        },
+        "source": {
+          "description": "original 原创 | bank:<题库 id>（题库题只存 id 和标注，不存题面）",
+          "type": "string",
+          "pattern": "^(original|bank:[A-Za-z0-9][A-Za-z0-9._/-]*)$"
+        },
+        "license": { "$ref": "#/$defs/license" }
+      }
+    },
+    "step": {
+      "type": "object",
+      "required": ["label", "work"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "$ref": "#/$defs/text" },
+        "work": { "$ref": "#/$defs/text" },
+        "shown": { "type": "boolean" }
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": ["text"],
+      "additionalProperties": false,
+      "properties": {
+        "text": { "$ref": "#/$defs/text" },
+        "correct": { "type": "boolean" },
+        "misconception": {
+          "description": "选了这个干扰项，说明可能有哪个迷思",
+          "$ref": "#/$defs/text"
+        }
+      }
+    },
+    "answer": {
+      "type": "object",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "enum": ["choice", "number", "expression", "open"] },
+        "explain": { "$ref": "#/$defs/text" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "choice" } } },
+          "then": {
+            "properties": {
+              "kind": true,
+              "explain": true,
+              "options": { "type": "array", "minItems": 2, "items": { "$ref": "#/$defs/option" } },
+              "multiple": { "type": "boolean" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "number" } } },
+          "then": {
+            "properties": {
+              "kind": true,
+              "explain": true,
+              "value": {
+                "description": "数值；分数写成字符串，如 '-3/4'",
+                "anyOf": [
+                  { "type": "number" },
+                  { "type": "string", "pattern": "^-?[0-9]+(\\.[0-9]+)?(/[0-9]+)?$" }
+                ]
+              },
+              "tolerance": { "type": "number", "minimum": 0 },
+              "unit": { "$ref": "#/$defs/text" }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "expression" } } },
+          "then": {
+            "properties": {
+              "kind": true,
+              "explain": true,
+              "value": { "$ref": "#/$defs/text" },
+              "equivalent": { "type": "array", "items": { "$ref": "#/$defs/text" } },
+              "vars": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": { "type": "string", "pattern": "^[A-Za-z][A-Za-z0-9_]*$" }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "open" } } },
+          "then": {
+            "properties": {
+              "kind": true,
+              "explain": true,
+              "rubric": {
+                "description": "评分要点，供老师或模型评分",
+                "type": "array",
+                "minItems": 1,
+                "items": { "$ref": "#/$defs/text" }
+              },
+              "sample": { "$ref": "#/$defs/text" }
+            },
+            "additionalProperties": false
+          }
+        }
+      ]
+    }
+  }
+}
