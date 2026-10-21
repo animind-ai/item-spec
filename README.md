@@ -16,7 +16,7 @@ pack:
   id: ep21
   title: 勾股定理：拼一拼就看见
   line: insight            # insight 洞察 | worked 例题讲解 | contest 竞赛
-  units: [J11]             # 规划 §1.2 的单元编号
+  units: [J11]             # 单元编号，单元表见 practice-engine 的 data/units.yaml
   episode: 21
   scene: ep21              # 配套视频的 scene-spec meta.id
   misconceptions: [a+b=c]  # 写了这一项，题目里的迷思必须取自这里
@@ -98,7 +98,7 @@ for issue in report.issues:
 | 时机 | IS240 题型和推送时机不符 · IS241 探索题当场判分（警告）· IS242 预测题没写 beat（警告）· IS243 回测题不是变式 / 交错题没写 skill · IS244 自我解释题不是开放题（警告）· IS245 概念题没加自信度（警告）· IS246 迷思没在包里声明 | |
 | 变式 | IS250 锚题不存在 · IS251 锚题是自己 · IS252 锚题本身是变式（警告）· IS253 方法比较不是 compare 题（警告）· IS254 同一锚题、同一时机的变式阶梯倒退（警告） | |
 | 渐隐 | IS260 非程序题写了 scaffold · IS261 上一级不存在或不是样例 · IS262 渐隐倒退 · IS263 完整样例有隐去的步、半样例没隐去任何一步、独立题给出了步骤 · IS264 上一级隐去的步这里又给出 · IS265 子目标标签和上一级不一致（警告）· IS266 样例没写 steps | |
-| 覆盖 | IS270–IS276（警告） | 规划 §3.1 练习包：探索题、预测题（洞察集）、2 道以上概念题和程序题、自我解释、非例（洞察集）、2 道以上回测变式、程序题从样例过渡到独立 |
+| 覆盖 | IS270–IS276（警告） | 练习包的建议结构：探索题、预测题（洞察集）、2 道以上概念题和程序题、自我解释、非例（洞察集）、2 道以上回测变式、程序题从样例过渡到独立 |
 | 视频 | IS280 beat 不存在 · IS281 beat 没有 predict / think 暂停 · IS282 暂停点的 `app_item` 对不上（警告）· IS283 单元或集数和视频不一致（警告）· IS284 `pack.scene` 不是这个视频 | 需要 `--scene` |
 
 结构不通过时不运行语义检查。
@@ -131,7 +131,7 @@ pack:
   id: ep21
   title: 勾股定理：拼一拼就看见
   line: insight            # insight 洞察 | worked 例题讲解 | contest 竞赛
-  units: [J11]             # 规划 §1.2 的单元编号
+  units: [J11]             # 单元编号，单元表见 practice-engine 的 data/units.yaml
   episode: 21
   scene: ep21              # 配套视频的 scene-spec meta.id
   misconceptions: [a+b=c]  # 写了这一项，题目里的迷思必须取自这里
@@ -151,7 +151,7 @@ items:
     source: original
 ```
 
-(Comments in the example, in order: `line` is insight | worked (worked problem) | contest; `units` are unit numbers from plan §1.2; `scene` is the scene-spec `meta.id` of the companion video; when `misconceptions` is given, item misconceptions must be taken from it. The title is "Pythagorean theorem: see it by rearranging pieces"; the item asks "Why isn't the hypotenuse of a right triangle $a+b$? Explain in one sentence.", and the rubric is "mentions that the sum of two sides is greater than the third, or uses an area rearrangement to get $c^2=a^2+b^2$".)
+(Comments in the example, in order: `line` is insight | worked (worked problem) | contest; `units` are unit ids from the unit table in practice-engine's `data/units.yaml`; `scene` is the scene-spec `meta.id` of the companion video; when `misconceptions` is given, item misconceptions must be taken from it. The title is "Pythagorean theorem: see it by rearranging pieces"; the item asks "Why isn't the hypotenuse of a right triangle $a+b$? Explain in one sentence.", and the rubric is "mentions that the sum of two sides is greater than the third, or uses an area rearrangement to get $c^2=a^2+b^2$".)
 
 Full examples:
 - [`examples/ep21.items.yaml`](examples/ep21.items.yaml): insight series #21, the Pythagorean theorem. Pre-video exploration item, in-video predict item (matching the `Predict` pause), why items and self-explanation, an obtuse-triangle non-example, procedural items going worked example → faded example → independent, method comparison, retest variations climbing change the condition → change the conclusion → reverse, and end-of-unit interleaved items.
@@ -215,7 +215,7 @@ Exit codes: 0 passed (warnings allowed); 1 errors (warnings count too with `--st
 | Slot | IS240 item type doesn't fit push slot · IS241 exploration item graded on the spot (warning) · IS242 predict item has no beat (warning) · IS243 retest item isn't a variation / interleave item has no skill · IS244 self-explanation item isn't open-ended (warning) · IS245 conceptual item has no confidence rating (warning) · IS246 misconception not declared in the pack | |
 | Variation | IS250 anchor doesn't exist · IS251 anchor is itself · IS252 anchor is itself a variation (warning) · IS253 method comparison isn't a compare item (warning) · IS254 variation ladder goes backwards for the same anchor and slot (warning) | |
 | Fading | IS260 non-procedural item has a scaffold · IS261 previous level missing or not an example · IS262 fading goes backwards · IS263 full worked example hides a step, faded example hides no step, or independent item gives steps · IS264 a step hidden at the previous level is shown again here · IS265 subgoal labels inconsistent with the previous level (warning) · IS266 example has no steps | |
-| Coverage | IS270–IS276 (warnings) | Plan §3.1 practice pack: exploration item, predict item (insight episodes), 2+ conceptual and procedural items, self-explanation, non-example (insight episodes), 2+ retest variations, procedural items moving from worked example to independent |
+| Coverage | IS270–IS276 (warnings) | Recommended pack structure: exploration item, predict item (insight episodes), 2+ conceptual and procedural items, self-explanation, non-example (insight episodes), 2+ retest variations, procedural items moving from worked example to independent |
 | Video | IS280 beat doesn't exist · IS281 beat has no predict / think pause · IS282 pause point's `app_item` doesn't match (warning) · IS283 unit or episode inconsistent with the video (warning) · IS284 `pack.scene` isn't this video | Requires `--scene` |
 
 Semantic checks don't run if the structure check fails.
