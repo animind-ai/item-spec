@@ -8,6 +8,14 @@
 
 和 [scene-spec](../scene-spec) 同一个思路，也复用它的受限 YAML 读取器和检查报告。
 
+### 安装
+
+```bash
+pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
+```
+
+scene-spec 会按对应的 tag 一起装上（这两个包还没有发布到 PyPI）。要改代码时，把依赖的几个仓库和本仓库并排检出到同一个目录，再 `uv sync`（见「开发」）。
+
 ### 一个练习包长什么样
 
 ```yaml
@@ -122,6 +130,14 @@ uvx ruff check .
 A structured description format for math practice items: one practice pack (`<id>.items.yaml`) per video, one structured entry per item. Both people and models can write it, it can be validated automatically, and the scheduler ([practice-engine](../practice-engine)) and the player read it directly.
 
 Same approach as [scene-spec](../scene-spec), and it reuses scene-spec's restricted YAML reader and check reports.
+
+### Installation
+
+```bash
+pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
+```
+
+scene-spec is installed from its matching tag (neither package is on PyPI yet). To work on the code, check out the repositories it depends on next to this one in the same directory and run `uv sync` (see "Development").
 
 ### What a practice pack looks like
 
