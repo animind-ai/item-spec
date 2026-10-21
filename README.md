@@ -14,6 +14,8 @@
 pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
 ```
 
+用 uv 安装时加 `--no-sources`，例如 `uv pip install --no-sources "…"`；不加的话 uv 会去找开发用的同级目录，装不上。
+
 scene-spec 会按对应的 tag 一起装上（这两个包还没有发布到 PyPI）。要改代码时，把依赖的几个仓库和本仓库并排检出到同一个目录，再 `uv sync`（见「开发」）。
 
 ### 一个练习包长什么样
@@ -136,6 +138,8 @@ Same approach as [scene-spec](https://github.com/animind-ai/scene-spec), and it 
 ```bash
 pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
 ```
+
+With uv, add `--no-sources`, e.g. `uv pip install --no-sources "…"`; without it uv looks for the sibling directories used in development and fails.
 
 scene-spec is installed from its matching tag (neither package is on PyPI yet). To work on the code, check out the repositories it depends on next to this one in the same directory and run `uv sync` (see "Development").
 
