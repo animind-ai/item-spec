@@ -4,9 +4,17 @@
 
 ## 中文
 
-数学练习题的结构化描述格式：一集视频配一个练习包（`<id>.items.yaml`），一道题一段结构化描述。人和模型都能写，能自动校验，调度器（[practice-engine](../practice-engine)）和播放器直接读。
+数学练习题的结构化描述格式：一集视频配一个练习包（`<id>.items.yaml`），一道题一段结构化描述。人和模型都能写，能自动校验，调度器（[practice-engine](https://github.com/animind-ai/practice-engine)）和播放器直接读。
 
-和 [scene-spec](../scene-spec) 同一个思路，也复用它的受限 YAML 读取器和检查报告。
+和 [scene-spec](https://github.com/animind-ai/scene-spec) 同一个思路，也复用它的受限 YAML 读取器和检查报告。
+
+### 安装
+
+```bash
+pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
+```
+
+scene-spec 会按对应的 tag 一起装上（这两个包还没有发布到 PyPI）。要改代码时，把依赖的几个仓库和本仓库并排检出到同一个目录，再 `uv sync`（见「开发」）。
 
 ### 一个练习包长什么样
 
@@ -119,9 +127,17 @@ uvx ruff check .
 
 ## English
 
-A structured description format for math practice items: one practice pack (`<id>.items.yaml`) per video, one structured entry per item. Both people and models can write it, it can be validated automatically, and the scheduler ([practice-engine](../practice-engine)) and the player read it directly.
+A structured description format for math practice items: one practice pack (`<id>.items.yaml`) per video, one structured entry per item. Both people and models can write it, it can be validated automatically, and the scheduler ([practice-engine](https://github.com/animind-ai/practice-engine)) and the player read it directly.
 
-Same approach as [scene-spec](../scene-spec), and it reuses scene-spec's restricted YAML reader and check reports.
+Same approach as [scene-spec](https://github.com/animind-ai/scene-spec), and it reuses scene-spec's restricted YAML reader and check reports.
+
+### Installation
+
+```bash
+pip install "item-spec @ git+https://github.com/animind-ai/item-spec@v0.1.0"
+```
+
+scene-spec is installed from its matching tag (neither package is on PyPI yet). To work on the code, check out the repositories it depends on next to this one in the same directory and run `uv sync` (see "Development").
 
 ### What a practice pack looks like
 
