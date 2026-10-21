@@ -21,7 +21,7 @@
       "pattern": "^[a-z0-9][a-z0-9-]*$"
     },
     "unit": {
-      "description": "规划 §1.2 的单元编号，如 P3b、M5、H6、J11、S6、X1",
+      "description": "单元编号（单元表见 practice-engine 的 data/units.yaml），如 P3b、M5、H6、J11、S6、X1",
       "type": "string",
       "pattern": "^[PMHJSX][0-9]+b?$"
     },

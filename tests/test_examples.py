@@ -25,7 +25,7 @@ def test_examples_match_their_scene(name):
 
 
 def test_ep21_follows_the_practice_plan():
-    """规划 §3.1：探索 1、预测 1、概念 2–3 以上（含自我解释和非例）、程序题渐隐、回测变式、交错题。"""
+    """练习包的建议结构：探索 1、预测 1、概念 2–3 以上（含自我解释和非例）、程序题渐隐、回测变式、交错题。"""
     items = load_file(EXAMPLES / "ep21.items.yaml")["items"]
     by_type = {}
     for it in items:
