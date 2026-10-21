@@ -6,7 +6,7 @@
 - 题库题只带 id 和标注，不带题面；原创题题面和答案齐全；
 - 题型和推送时机匹配：探索题在看片前且不判对错，回测题必须是变式；
 - 变式阶梯（锚题 → 变条件 → 变结论 → 逆向 → 方法比较）和样例渐隐（完整 → 半 → 独立）按顺序上升；
-- 练习包覆盖规划 §3.1 的各个时机（只给警告）；
+- 练习包覆盖各个推送时机：看片前、视频中、看片后、回测（只给警告）；
 - 给了配套 scene-spec 文件时，核对预测题的 beat、单元和集数。
 """
 
@@ -281,7 +281,7 @@ class _Checker:
             if not a.get("shown", True) and b.get("shown", True):
                 self.r.error("IS264", f"{p}.steps[{j}]", f"上一级 {src_id!r} 已经隐去了「{a['label']}」，这里又给出来了；渐隐要单调")
 
-    # ---------- 覆盖（规划 §3.1 练习包） ----------
+    # ---------- 覆盖（一个练习包建议包含的各类题） ----------
 
     def check_coverage(self) -> None:
         line = self.pack["line"]
@@ -295,10 +295,10 @@ class _Checker:
             self.r.warning("IS271", "items", "洞察集没有视频中的预测题（predict）")
         concept = [i for i in post if i["type"] in CONCEPT_TYPES]
         if len(concept) < 2:
-            self.r.warning("IS272", "items", f"看片后的概念题（why / representation）只有 {len(concept)} 道，规划要求 2–3 道")
+            self.r.warning("IS272", "items", f"看片后的概念题（why / representation）只有 {len(concept)} 道，建议 2–3 道")
         procedure = [i for i in post if i["type"] == "procedure"]
         if len(procedure) < 2:
-            self.r.warning("IS272", "items", f"看片后的程序题只有 {len(procedure)} 道，规划要求 2–4 道")
+            self.r.warning("IS272", "items", f"看片后的程序题只有 {len(procedure)} 道，建议 2–4 道")
         if not any(i.get("self_explain") for i in self.items):
             self.r.warning("IS273", "items", "没有自我解释提示题（self_explain: true）")
         if line == "insight" and not any(i.get("non_example") for i in self.items):
